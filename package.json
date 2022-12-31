@@ -1,9 +1,9 @@
 {
-  "name": "example-dir",
-  "displayName": "Example dir",
+  "name": "gcp-prd-warning",
+  "displayName": "GCP PRD WARNING",
   "version": "0.0.0",
-  "description": "A basic Plasmo extension.",
-  "author": "yuyuyugo",
+  "description": "This notifies you that you are opening GCP in Production",
+  "author": "yugo-ibuki",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
