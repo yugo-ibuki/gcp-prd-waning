@@ -6,8 +6,7 @@ import {
   flex,
   frame,
   input,
-  projectNameFrame,
-  projectNameList
+  projectNameFrame
 } from "~src/css/form";
 
 function IndexPopup() {
@@ -30,9 +29,7 @@ function IndexPopup() {
       {
         projectNames && projectNames.map((name) => (
           <div key={name} style={projectNameFrame}>
-            <p style={projectNameList}>
-              {name}
-            </p>
+            <p>{name}</p>
             <button
               style={deleteButton}
               data-name={name}
