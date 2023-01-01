@@ -1,85 +1,85 @@
 import { useEffect, useState } from "react";
-import { getProjectNamesFromStorage } from "~src/libs/getProjectNamesFromStorage";
-import { setProjectNamesToStorage } from "~src/libs/setProjectNamesToStorage";
+import { getProjectIdsFromStorage } from "~src/libs/getProjectIdsFromStorage";
+import { setProjectIdsToStorage } from "~src/libs/setProjectIdsToStorage";
 
 type OnForm = {
-  projectName: string;
-  projectNames: string[];
+  projectId: string;
+  projectIds: string[];
   onRegister: () => void;
-  onInputProjectName: (projectName: string) => void;
-  onDeleteProjectName: (projectName: string) => void;
+  onInputProjectId: (projectId: string) => void;
+  onDeleteProjectId: (projectId: string) => void;
   err: string
 }
 
 export const onForm = (): OnForm => {
-  const [projectName, setProjectName] = useState<string>('')
-  const [projectNames, setProjectNames] = useState<string[]>([])
+  const [projectId, setProjectId] = useState<string>('')
+  const [projectIds, setProjectIds] = useState<string[]>([])
   const [err, setErr] = useState<string>('')
 
   const onRegister = async () => {
     setErr('')
-    const projectNames = await getProjectNamesFromStorage()
+    const projectIds = await getProjectIdsFromStorage()
 
-    if (projectNames['projectNames'].includes(projectName)) {
+    if (projectIds['projectIds'].includes(projectId)) {
       setErr('already registered')
       return
     }
 
-    if (projectName.length > 40) {
+    if (projectId.length > 40) {
       setErr('too long. max 40 characters')
       return
     }
 
-    if (!projectNames['projectNames']) {
-      await setProjectNamesToStorage([projectName])
-      setProjectNames([projectName])
-      setProjectName('')
+    if (!projectIds['projectIds']) {
+      await setProjectIdsToStorage([projectId])
+      setProjectIds([projectId])
+      setProjectId('')
       return
     }
 
-    await setProjectNamesToStorage([
-      projectName,
-      ...projectNames['projectNames']
+    await setProjectIdsToStorage([
+      projectId,
+      ...projectIds['projectIds']
     ])
-    const newProjectNames = await getProjectNamesFromStorage()
-    setProjectNames(newProjectNames['projectNames'])
-    setProjectName('')
+    const newProjectIds = await getProjectIdsFromStorage()
+    setProjectIds(newProjectIds['projectIds'])
+    setProjectId('')
   }
 
-  const onInputProjectName = (projectNameProp: string) => {
+  const onInputProjectId = (projectIdProp: string) => {
     setErr('')
-    setProjectName(projectNameProp);
-    if (projectNames.includes(projectNameProp)) {
+    setProjectId(projectIdProp);
+    if (projectIds.includes(projectIdProp)) {
       setErr('already registered')
     }
-    if (projectNameProp.length > 40) {
+    if (projectIdProp.length > 40) {
       setErr('too long. max 40 characters')
       return
     }
   }
 
-  const onDeleteProjectName = async (projectName: string) => {
-    const projectNames = await getProjectNamesFromStorage()
-    const filteredProjectNames = projectNames['projectNames']
-      .filter((name: string) => name !== projectName)
-    await setProjectNamesToStorage(filteredProjectNames)
-    const newProjectNames = await getProjectNamesFromStorage()
-    setProjectNames(newProjectNames['projectNames'])
+  const onDeleteProjectId = async (projectId: string) => {
+    const projectIds = await getProjectIdsFromStorage()
+    const filteredProjectIds = projectIds['projectIds']
+      .filter((name: string) => name !== projectId)
+    await setProjectIdsToStorage(filteredProjectIds)
+    const newProjectIds = await getProjectIdsFromStorage()
+    setProjectIds(newProjectIds['projectIds'])
   }
 
   useEffect(() => {
     (async () => {
-      const projectNames = await getProjectNamesFromStorage()
-      setProjectNames(projectNames['projectNames'])
+      const projectIds = await getProjectIdsFromStorage()
+      setProjectIds(projectIds['projectIds'])
     })()
   }, [])
 
   return {
-    projectName,
-    projectNames,
+    projectId,
+    projectIds,
     onRegister,
-    onInputProjectName,
-    onDeleteProjectName,
+    onInputProjectId,
+    onDeleteProjectId,
     err
   }
 }
