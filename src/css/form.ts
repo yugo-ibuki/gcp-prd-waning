@@ -30,7 +30,7 @@ export const error = {
   margin: '10px 0 0 0'
 }
 
-export const projectNameFrame = {
+export const projectIdFrame = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
