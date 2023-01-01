@@ -1,92 +1,94 @@
 import { useEffect, useState } from "react";
-import { getProjectIdsFromStorage } from "~src/libs/getProjectIdsFromStorage";
-import { setProjectIdsToStorage } from "~src/libs/setProjectIdsToStorage";
+import { getProjectNamesFromStorage } from "~src/libs/getProjectNamesFromStorage";
+import { setProjectNamesToStorage } from "~src/libs/setProjectNamesToStorage";
 
 type OnForm = {
-  projectId: string;
-  projectIds: string[];
+  projectName: string;
+  projectNames: string[];
   onRegister: () => void;
-  onInputProjectId: (projectId: string) => void;
-  onDeleteProjectId: (projectId: string) => void;
+  onInputProjectName: (ProjectName: string) => void;
+  onDeleteProjectName: (ProjectName: string) => void;
   onAllDelete: () => void;
   err: string
 }
 
 export const onForm = (): OnForm => {
-  const [projectId, setProjectId] = useState<string>('')
-  const [projectIds, setProjectIds] = useState<string[]>([])
+  const [projectName, setProjectName] = useState<string>('')
+  const [projectNames, setProjectNames] = useState<string[]>([])
   const [err, setErr] = useState<string>('')
 
   const onRegister = async () => {
     setErr('')
-    const projectIds = await getProjectIdsFromStorage()
+    const projectNames = await getProjectNamesFromStorage()
 
-    if (projectIds['projectIds'].includes(projectId)) {
+    if (projectNames['projectNames'].includes(projectName)) {
       setErr('already registered')
       return
     }
 
-    if (projectId.length > 40) {
+    if (projectName.length > 40) {
       setErr('too long. max 40 characters')
       return
     }
 
-    if (!projectIds['projectIds']) {
-      await setProjectIdsToStorage([projectId])
-      setProjectIds([projectId])
-      setProjectId('')
+    if (!projectNames['projectNames']) {
+      await setProjectNamesToStorage([projectName])
+      setProjectNames([projectName])
+      setProjectName('')
       return
     }
 
-    await setProjectIdsToStorage([
-      projectId,
-      ...projectIds['projectIds']
+    await setProjectNamesToStorage([
+      projectName,
+      ...projectNames['projectNames']
     ])
-    const newProjectIds = await getProjectIdsFromStorage()
-    setProjectIds(newProjectIds['projectIds'])
-    setProjectId('')
+    const newProjectNames = await getProjectNamesFromStorage()
+    setProjectNames(newProjectNames['projectNames'])
+    setProjectName('')
   }
 
-  const onInputProjectId = (projectIdProp: string) => {
+  const onInputProjectName = (projectNameProp: string) => {
     setErr('')
-    setProjectId(projectIdProp);
-    if (projectIds.includes(projectIdProp)) {
+    setProjectName(projectNameProp);
+    console.log(projectNames);
+    if (projectNames.includes(projectNameProp)) {
       setErr('already registered')
     }
-    if (projectIdProp.length > 40) {
+    if (projectNameProp.length > 40) {
       setErr('too long. max 40 characters')
       return
     }
   }
 
-  const onDeleteProjectId = async (projectId: string) => {
-    const projectIds = await getProjectIdsFromStorage()
-    const filteredProjectIds = projectIds['projectIds']
-      .filter((name: string) => name !== projectId)
-    await setProjectIdsToStorage(filteredProjectIds)
-    const newProjectIds = await getProjectIdsFromStorage()
-    setProjectIds(newProjectIds['projectIds'])
+  const onDeleteProjectName = async (projectName: string) => {
+    const projectNames = await getProjectNamesFromStorage()
+    const filteredProjectNames = projectNames['projectNames']
+      .filter((name: string) => name !== projectName)
+    await setProjectNamesToStorage(filteredProjectNames)
+    const newProjectNames = await getProjectNamesFromStorage()
+    setProjectNames(newProjectNames['projectNames'])
   }
 
   const onAllDelete = async () => {
-    console.log('all delete');
-    await setProjectIdsToStorage([])
-    setProjectIds([])
+    await chrome.storage.local.clear()
+    await setProjectNamesToStorage([])
+    setProjectNames([])
   }
 
   useEffect(() => {
     (async () => {
-      const projectIds = await getProjectIdsFromStorage()
-      setProjectIds(projectIds['projectIds'])
+      const projectNames = await getProjectNamesFromStorage()
+      console.log(projectNames);
+      setProjectNames(projectNames['projectNames'])
     })()
   }, [])
 
   return {
-    projectId,
-    projectIds,
+    projectName,
+    projectNames,
     onRegister,
-    onInputProjectId,
-    onDeleteProjectId,
+    onInputProjectName,
+    onDeleteProjectName,
     onAllDelete,
     err
   }

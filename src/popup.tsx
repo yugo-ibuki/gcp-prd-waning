@@ -7,16 +7,16 @@ import {
   flex,
   frame,
   input,
-  projectIdFrame
+  ProjectNameFrame
 } from "~src/css/form";
 
 function IndexPopup() {
   const {
-    projectId,
-    projectIds,
+    projectName,
+    projectNames,
     onRegister,
-    onInputProjectId,
-    onDeleteProjectId,
+    onInputProjectName,
+    onDeleteProjectName,
     onAllDelete,
     err
   } = onForm()
@@ -27,8 +27,8 @@ function IndexPopup() {
           style={input}
           type="text"
           placeholder={"input your prd project name"}
-          value={projectId}
-          onChange={(e) => onInputProjectId(e.target.value)}
+          value={projectName}
+          onChange={(e) => onInputProjectName(e.target.value)}
         />
         <button style={button} onClick={onRegister}>
           Register
@@ -39,13 +39,13 @@ function IndexPopup() {
       </div>
       { err && <div style={error}>{err}</div> }
       {
-        projectIds && projectIds.map((id) => (
-          <div key={id} style={projectIdFrame}>
-            <p>{id}</p>
+        projectNames && projectNames.map((name) => (
+          <div key={name} style={ProjectNameFrame}>
+            <p>{name}</p>
             <button
               style={deleteButton}
-              data-project-id={id}
-              onClick={(e) => onDeleteProjectId(e.currentTarget.dataset.projectId)}
+              data-project-name={name}
+              onClick={(e) => onDeleteProjectName(e.currentTarget.dataset.projectName)}
             >
               delete
             </button>
