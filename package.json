@@ -25,7 +25,7 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
+      "https://console.cloud.google.com/*"
     ],
     "permissions": [
       "storage"
