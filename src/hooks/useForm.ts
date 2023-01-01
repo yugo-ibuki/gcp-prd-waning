@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getProjectNamesFromStorage } from "~src/libs/getProjectNamesFromStorage";
 import { setProjectNamesToStorage } from "~src/libs/setProjectNamesToStorage";
 
-type OnForm = {
+type UseForm = {
   projectName: string;
   projectNames: string[];
   onRegister: () => void;
@@ -12,7 +12,7 @@ type OnForm = {
   err: string
 }
 
-export const onForm = (): OnForm => {
+export const useForm = (): UseForm => {
   const [projectName, setProjectName] = useState<string>('')
   const [projectNames, setProjectNames] = useState<string[]>([])
   const [err, setErr] = useState<string>('')

@@ -1,14 +1,13 @@
-import { onForm } from "~src/onForm";
+import { useForm } from "~src/hooks/useForm";
 import {
   allDeleteButton,
   button,
-  deleteButton,
   error,
   flex,
   frame,
   input,
-  ProjectNameFrame
 } from "~src/css/form";
+import { ListItem } from "~src/components/ListItem";
 
 function IndexPopup() {
   const {
@@ -19,7 +18,7 @@ function IndexPopup() {
     onDeleteProjectName,
     onAllDelete,
     err
-  } = onForm()
+  } = useForm()
   return (
     <div style={frame}>
       <div style={flex}>
@@ -39,18 +38,14 @@ function IndexPopup() {
       </div>
       { err && <div style={error}>{err}</div> }
       {
-        projectNames && projectNames.map((name) => (
-          <div key={name} style={ProjectNameFrame}>
-            <p>{name}</p>
-            <button
-              style={deleteButton}
-              data-project-name={name}
-              onClick={(e) => onDeleteProjectName(e.currentTarget.dataset.projectName)}
-            >
-              delete
-            </button>
-          </div>
-        ))
+        projectNames &&
+        projectNames.map((name) => (
+            <ListItem
+              key={name}
+              name={name}
+              onDeleteProjectName={onDeleteProjectName}
+            />)
+        )
       }
     </div>
   )
