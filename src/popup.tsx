@@ -30,7 +30,7 @@ function IndexPopup() {
           onChange={(e) => onInputProjectName(e.target.value)}
         />
         <button style={button} onClick={onRegister}>
-          Register
+          Submit
         </button>
         <button style={allDeleteButton} onClick={onAllDelete}>
           All Delete
