@@ -8,6 +8,7 @@ type OnForm = {
   onRegister: () => void;
   onInputProjectId: (projectId: string) => void;
   onDeleteProjectId: (projectId: string) => void;
+  onAllDelete: () => void;
   err: string
 }
 
@@ -67,6 +68,12 @@ export const onForm = (): OnForm => {
     setProjectIds(newProjectIds['projectIds'])
   }
 
+  const onAllDelete = async () => {
+    console.log('all delete');
+    await setProjectIdsToStorage([])
+    setProjectIds([])
+  }
+
   useEffect(() => {
     (async () => {
       const projectIds = await getProjectIdsFromStorage()
@@ -80,6 +87,7 @@ export const onForm = (): OnForm => {
     onRegister,
     onInputProjectId,
     onDeleteProjectId,
+    onAllDelete,
     err
   }
 }

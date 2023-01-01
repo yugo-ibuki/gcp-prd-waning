@@ -25,6 +25,11 @@ export const button = {
   cursor: 'pointer',
 }
 
+export const allDeleteButton = {
+  ...button,
+  background: '#ff0000',
+}
+
 export const error = {
   color: 'red',
   margin: '10px 0 0 0'
