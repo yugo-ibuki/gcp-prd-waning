@@ -3,12 +3,19 @@ import { getProjectNamesFromStorage } from "~src/libs/getProjectNamesFromStorage
 import { setProjectNamesToStorage } from "~src/libs/setProjectNamesToStorage";
 
 type UseForm = {
+  /** project name input from users */
   projectName: string;
+  /** project names stored in storage */
   projectNames: string[];
+  /** handler to register the project name */
   onRegister: () => void;
+  /** handler to input the project name */
   onInputProjectName: (ProjectName: string) => void;
+  /** handler to delete a project from storage */
   onDeleteProjectName: (ProjectName: string) => void;
+  /** handler to delete all projects from storage */
   onAllDelete: () => void;
+  /** project name validation err */
   err: string
 }
 
