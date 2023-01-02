@@ -50,7 +50,6 @@ export const useForm = (): UseForm => {
   const onInputProjectName = (projectNameProp: string) => {
     setErr('')
     setProjectName(projectNameProp);
-    console.log(projectNames);
     if (projectNames.includes(projectNameProp)) {
       setErr('already registered')
     }
