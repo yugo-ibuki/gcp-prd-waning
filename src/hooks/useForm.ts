@@ -77,7 +77,6 @@ export const useForm = (): UseForm => {
   useEffect(() => {
     (async () => {
       const projectNames = await getProjectNamesFromStorage()
-      console.log(projectNames);
       setProjectNames(projectNames['projectNames'])
     })()
   }, [])
